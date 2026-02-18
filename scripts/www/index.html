@@ -1,11 +1,79 @@
+
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>PakePlus</title>
-    </head>
-    <body>
-        PakePlus
-    </body>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>应知应会刷题</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for a modern look if online, fallback to system -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1 class="app-title">应知应会</h1>
+            <button id="import-btn" class="icon-button" aria-label="导入题目">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+            </button>
+            <input type="file" id="csv-upload" accept=".csv" style="display: none;">
+        </header>
+
+        <!-- Main Content -->
+        <main class="question-container">
+            <div id="card-area" class="card">
+                <div class="card-header">
+                    <span id="question-number" class="badge">Question 1</span>
+                </div>
+                <div class="card-body">
+                    <p id="question-text">加载中...</p>
+                </div>
+                <div class="card-footer">
+                    <div id="options-container" class="options-list">
+                        <!-- Options injected here -->
+                    </div>
+                </div>
+                
+                <!-- Analysis Section (Hidden by default) -->
+                <div id="analysis-section" class="analysis hidden">
+                    <div class="analysis-header">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        <span>解析</span>
+                    </div>
+                    <p id="analysis-text"></p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer / Controls -->
+        <footer class="app-footer">
+            <div class="progress-info">
+                <span id="progress-text">0 / 0</span>
+                <div class="progress-bar-bg">
+                    <div id="progress-bar-fill" class="progress-bar-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+            <button id="next-btn" class="fab-button" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </button>
+        </footer>
+    </div>
+    
+    <!-- Import Modal / Toast -->
+    <div id="toast" class="toast hidden">导入成功！</div>
+
+    <script src="script.js"></script>
+</body>
 </html>
