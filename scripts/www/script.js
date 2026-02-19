@@ -67,16 +67,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    importBtn.addEventListener('click', () => {
-        csvInput.click();
-    });
+    // importBtn click is handled natively by label for="csv-upload"
 
     csvInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (!file) return;
 
         const reader = new FileReader();
-        reader.onload = function(event) {
+        reader.onload = function (event) {
             const text = event.target.result;
             try {
                 const parsedQuestions = parseCSV(text);
@@ -103,18 +101,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // functions
     function loadQuestion(index) {
         if (index < 0 || index >= questions.length) return;
-        
+
         const q = questions[index];
         answered = false;
-        
+
         // Update UI
         questionNumber.textContent = `Question ${index + 1}`;
         questionText.textContent = q.question;
-        
+
         // Reset Analysis
         analysisSection.classList.add('hidden');
         analysisText.textContent = q.analysis || "暂无解析";
-        
+
         // Disable next button until answered
         nextBtn.disabled = true;
 
@@ -137,17 +135,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Normalize answers (trim spaces, handle multiple correct answers if needed, though simple logic here)
         // Correct label might be "A" or "A, B" (for multi select, but let's stick to single choice logic mostly for now or simple check)
-        
+
         // Check if selected label is IN correct string (e.g. correct="A", selected="A" -> true. Correct="AB", selected="A"? complex)
         // Assuming single choice for UI simplicity or exact match.
         // Let's assume strict match for now or partial check?
         // Logic: If user clicks A, and answer is A, correct.
-        
-        const isCorrect = correctLabel.includes(selectedLabel); 
+
+        const isCorrect = correctLabel.includes(selectedLabel);
         // Note: This simple logic marks A correct if Answer is AB. 
         // For strict quiz app, we might need multi-select mode. 
         // Given the dataset seems to have mix, let's just show Feedback immediately.
-        
+
         if (isCorrect) {
             btnElement.classList.add('correct');
         } else {
@@ -181,35 +179,35 @@ document.addEventListener('DOMContentLoaded', () => {
     function parseCSV(csvText) {
         // Simple CSV parser that handles the specific format we generated
         // Expects Header: 问题描述,答案,A 选项,B 选项,C 选项,D 选项,解析
-        
+
         const lines = csvText.trim().split('\n');
         const result = [];
-        
+
         // Check header (Line 0) - skip validation for flexibility?
         // Start from line 1
-        
+
         // Helper to handle CSV quote escaping if we used standard CSV library output
         // Standard CSV: "Field1","Field2"
         // Regex to split by comma ignoring quotes is complex.
         // Let's try a robust regex approach.
-        
+
         // This regex matches CSV values
         const csvRegex = /(?:,|\n|^)("(?:(?:"")*[^"]*)*"|[^",\n]*|(?:\n|$))/g;
-        
+
         // Actually, since we're in browser, maybe just use simple split if no quotes, 
         // OR reuse the logic.
         // Let's implement a rows parser.
-        
+
         // Basic parser
         const rows = [];
         let currentRow = [];
         let currentVal = '';
         let inQuotes = false;
-        
+
         for (let i = 0; i < csvText.length; i++) {
             const char = csvText[i];
-            const nextChar = csvText[i+1];
-             
+            const nextChar = csvText[i + 1];
+
             if (inQuotes) {
                 if (char === '"') {
                     if (nextChar === '"') {
@@ -246,9 +244,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Assume row 0 is header
         if (rows.length < 2) return [];
-        
+
         const headers = rows[0].map(h => h.trim());
-        
+
         // Map headers to indices
         // headers: 问题描述, 答案, A 选项, B 选项, C 选项, D 选项, 解析
         // find index
@@ -259,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const optCIdx = headers.indexOf('C 选项');
         const optDIdx = headers.indexOf('D 选项');
         const analysisIdx = headers.indexOf('解析');
-        
+
         if (qIdx === -1 || aIdx === -1) {
             console.error("Missing required columns");
             return [];
@@ -268,16 +266,16 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 1; i < rows.length; i++) {
             const row = rows[i];
             if (row.length < 2) continue; // Skip empty
-            
+
             const qText = row[qIdx];
             if (!qText) continue;
-            
+
             const options = [];
-            if (optAIdx !== -1 && row[optAIdx]) options.push({label: 'A', text: row[optAIdx]});
-            if (optBIdx !== -1 && row[optBIdx]) options.push({label: 'B', text: row[optBIdx]});
-            if (optCIdx !== -1 && row[optCIdx]) options.push({label: 'C', text: row[optCIdx]});
-            if (optDIdx !== -1 && row[optDIdx]) options.push({label: 'D', text: row[optDIdx]});
-            
+            if (optAIdx !== -1 && row[optAIdx]) options.push({ label: 'A', text: row[optAIdx] });
+            if (optBIdx !== -1 && row[optBIdx]) options.push({ label: 'B', text: row[optBIdx] });
+            if (optCIdx !== -1 && row[optCIdx]) options.push({ label: 'C', text: row[optCIdx] });
+            if (optDIdx !== -1 && row[optDIdx]) options.push({ label: 'D', text: row[optDIdx] });
+
             result.push({
                 id: i,
                 question: qText,
@@ -286,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 analysis: (analysisIdx !== -1) ? row[analysisIdx] : ''
             });
         }
-        
+
         return result;
     }
 });
