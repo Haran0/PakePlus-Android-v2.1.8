@@ -1,16 +1,17 @@
-
 :root {
-    --primary-color: #007AFF; /* iOS Blue */
+    --primary-color: #007AFF;
+    /* iOS Blue */
     --primary-hover: #0062cc;
-    --background-color: #F2F2F7; /* iOS System Gray 6 */
+    --background-color: #F2F2F7;
+    /* iOS System Gray 6 */
     --card-bg: #FFFFFF;
     --text-primary: #000000;
     --text-secondary: #8E8E93;
     --border-color: #C6C6C8;
     --success-color: #34C759;
     --error-color: #FF3B30;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
     --radius-lg: 16px;
     --radius-md: 12px;
     --safe-area-top: env(safe-area-inset-top);
@@ -29,7 +30,8 @@ body {
     background-color: var(--background-color);
     color: var(--text-primary);
     height: 100vh;
-    overflow: hidden; /* Prevent body scroll, handle inside containers */
+    overflow: hidden;
+    /* Prevent body scroll, handle inside containers */
 }
 
 .app-container {
@@ -66,10 +68,23 @@ body {
     cursor: pointer;
     color: var(--primary-color);
     transition: opacity 0.2s;
+    display: inline-flex;
+    /* Ensure label acts like a button */
+    align-items: center;
+    justify-content: center;
 }
 
 .icon-button:active {
     opacity: 0.6;
+}
+
+.hidden-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    z-index: -1;
 }
 
 /* Main Content */
@@ -91,13 +106,21 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    margin-bottom: 20px; /* Space for scrolling */
+    margin-bottom: 20px;
+    /* Space for scrolling */
     animation: slideIn 0.3s ease-out;
 }
 
 @keyframes slideIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .card-header {
@@ -130,7 +153,8 @@ body {
 .option-btn {
     appearance: none;
     background: var(--background-color);
-    border: 1px solid transparent; /* var(--border-color); */
+    border: 1px solid transparent;
+    /* var(--border-color); */
     border-radius: var(--radius-md);
     padding: 16px;
     text-align: left;
@@ -149,7 +173,8 @@ body {
     min-width: 20px;
 }
 
-.option-btn:active, .option-btn:focus {
+.option-btn:active,
+.option-btn:focus {
     background-color: #E5E5EA;
 }
 
@@ -159,14 +184,20 @@ body {
     border-color: var(--success-color);
     color: #1a7531;
 }
-.option-btn.correct .option-label { color: #1a7531; }
+
+.option-btn.correct .option-label {
+    color: #1a7531;
+}
 
 .option-btn.wrong {
     background-color: rgba(255, 59, 48, 0.1);
     border-color: var(--error-color);
     color: #c41e15;
 }
-.option-btn.wrong .option-label { color: #c41e15; }
+
+.option-btn.wrong .option-label {
+    color: #c41e15;
+}
 
 /* Analysis */
 .analysis {
@@ -195,12 +226,13 @@ body {
 /* Footer */
 .app-footer {
     padding: 16px 16px calc(16px + var(--safe-area-bottom));
-    background: var(--card-bg); /* App bar feel */
-    border-top: 1px solid rgba(0,0,0,0.05);
+    background: var(--card-bg);
+    /* App bar feel */
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.02);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.02);
     z-index: 10;
 }
 
@@ -263,7 +295,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0, 0, 0, 0.8);
     color: white;
     padding: 12px 24px;
     border-radius: 8px;
@@ -272,13 +304,26 @@ body {
     animation: fadeInOut 2s forwards;
 }
 
-.toast.hidden { display: none; }
+.toast.hidden {
+    display: none;
+}
 
 @keyframes fadeInOut {
-    0% { opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { opacity: 0; }
+    0% {
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 /* Dark Mode Support */
@@ -290,7 +335,17 @@ body {
         --text-secondary: #8E8E93;
         --border-color: #38383A;
     }
-    .option-btn { background-color: #2C2C2E; }
-    .option-btn:active, .option-btn:focus { background-color: #3A3A3C; }
-    .analysis { background-color: #2C2C2E; }
+
+    .option-btn {
+        background-color: #2C2C2E;
+    }
+
+    .option-btn:active,
+    .option-btn:focus {
+        background-color: #3A3A3C;
+    }
+
+    .analysis {
+        background-color: #2C2C2E;
+    }
 }
