@@ -17,71 +17,208 @@
 
 <body>
     <div class="app-container">
-        <!-- Header -->
-        <header class="app-header">
-            <h1 class="app-title">应知应会</h1>
-            <label for="csv-upload" id="import-btn" class="icon-button" aria-label="导入题目">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="17 8 12 3 7 8"></polyline>
-                    <line x1="12" y1="3" x2="12" y2="15"></line>
-                </svg>
-            </label>
-            <input type="file" id="csv-upload" accept=".csv,text/csv,application/vnd.ms-excel,text/plain"
-                class="hidden-input">
-        </header>
-
-        <!-- Main Content -->
-        <main class="question-container">
-            <div id="card-area" class="card">
-                <div class="card-header">
-                    <span id="question-number" class="badge">Question 1</span>
-                </div>
-                <div class="card-body">
-                    <p id="question-text">加载中...</p>
-                </div>
-                <div class="card-footer">
-                    <div id="options-container" class="options-list">
-                        <!-- Options injected here -->
+        <!-- Home View -->
+        <!-- Auth View -->
+        <div id="view-auth" class="view active-view">
+            <div class="auth-card">
+                <h1 class="app-title">欢迎回来</h1>
+                <p class="auth-subtitle">请登录以同步您的题库进度</p>
+                <form id="auth-form">
+                    <div class="form-group">
+                        <label for="username">用户名</label>
+                        <input type="text" id="username" required placeholder="请输入用户名">
                     </div>
+                    <div class="form-group">
+                        <label for="password">密码</label>
+                        <input type="password" id="password" required placeholder="请输入密码">
+                    </div>
+                    <button type="submit" class="primary-btn full-width">登录 / 注册</button>
+                    <p class="auth-note">如果是新用户，我们将自动为您创建账号。</p>
+                </form>
+            </div>
+        </div>
+
+        <!-- Creator View -->
+        <div id="view-creator" class="view hidden-view">
+            <header class="app-header">
+                <button id="creator-back-btn" class="icon-button" aria-label="返回">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                </button>
+                <h1 class="app-title">制作题库</h1>
+                <button id="save-deck-btn" class="icon-button" aria-label="保存">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                </button>
+            </header>
+            <main class="creator-container">
+                <div class="form-group">
+                    <label>题库名称</label>
+                    <input type="text" id="deck-name-input" placeholder="例如：近代史纲要">
                 </div>
 
-                <!-- Analysis Section (Hidden by default) -->
-                <div id="analysis-section" class="analysis hidden">
-                    <div class="analysis-header">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                <div id="questions-list" class="creator-questions-list">
+                    <!-- Questions added here -->
+                </div>
+
+                <div class="creator-actions">
+                    <button id="add-question-btn" class="outline-btn full-width">+ 添加题目</button>
+                    <button id="export-csv-btn" class="text-btn full-width">导出为 CSV</button>
+                </div>
+            </main>
+        </div>
+
+        <!-- Home View -->
+        <div id="view-home" class="view hidden-view">
+            <header class="app-header">
+                <div class="header-left">
+                    <h1 class="app-title">我的题库</h1>
+                </div>
+                <div class="header-right">
+                    <button id="create-btn" class="icon-button" aria-label="制作题库">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="12" y1="16" x2="12" y2="12"></line>
-                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                         </svg>
-                        <span>解析</span>
-                    </div>
-                    <p id="analysis-text"></p>
+                    </button>
+                    <label for="csv-upload" id="import-btn" class="icon-button" aria-label="导入题库">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                    </label>
+                    <input type="file" id="csv-upload" accept=".csv,text/csv,application/vnd.ms-excel,text/plain"
+                        class="hidden-input">
+                    <button id="logout-btn" class="icon-button" aria-label="退出">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                    </button>
                 </div>
-            </div>
-        </main>
+            </header>
 
-        <!-- Footer / Controls -->
-        <footer class="app-footer">
-            <div class="progress-info">
-                <span id="progress-text">0 / 0</span>
-                <div class="progress-bar-bg">
-                    <div id="progress-bar-fill" class="progress-bar-fill" style="width: 0%;"></div>
+            <div id="deck-list" class="deck-list">
+                <!-- Deck items will be injected here -->
+                <div class="empty-state">
+                    <p>还没有题库，点击右上角导入 CSV 文件</p>
                 </div>
             </div>
-            <button id="next-btn" class="fab-button" disabled>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-            </button>
-        </footer>
+        </div>
+
+        <!-- Quiz View -->
+        <div id="view-quiz" class="view hidden-view">
+            <header class="app-header">
+                <button id="back-btn" class="icon-button" aria-label="返回">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                </button>
+                <h1 class="app-title" id="quiz-title">刷题</h1>
+                <button id="settings-btn" class="icon-button" aria-label="设置">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path
+                            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                        </path>
+                    </svg>
+                </button>
+            </header>
+
+            <!-- Main Content -->
+            <main class="question-container">
+                <div id="card-area" class="card">
+                    <div class="card-header">
+                        <span id="question-number" class="badge">Question 1</span>
+                    </div>
+                    <div class="card-body">
+                        <p id="question-text">加载中...</p>
+                    </div>
+                    <div class="card-footer">
+                        <div id="options-container" class="options-list">
+                            <!-- Options injected here -->
+                        </div>
+                    </div>
+
+                    <!-- Analysis Section (Hidden by default) -->
+                    <div id="analysis-section" class="analysis hidden">
+                        <div class="analysis-header">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            <span>解析</span>
+                        </div>
+                        <p id="analysis-text"></p>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Footer / Controls -->
+            <footer class="app-footer">
+                <div class="progress-info">
+                    <span id="progress-text">0 / 0</span>
+                    <div class="progress-bar-bg">
+                        <div id="progress-bar-fill" class="progress-bar-fill" style="width: 0%;"></div>
+                    </div>
+                </div>
+                <button id="next-btn" class="fab-button" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </button>
+            </footer>
+        </div>
     </div>
 
-    <!-- Import Modal / Toast -->
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>练习设置</h2>
+                <button id="close-settings" class="icon-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="setting-item">
+                <label>打乱题目顺序</label>
+                <input type="checkbox" id="toggle-shuffle" class="toggle-switch">
+            </div>
+            <div class="setting-item">
+                <label>只看错题</label>
+                <input type="checkbox" id="toggle-wrong-only" class="toggle-switch">
+            </div>
+            <div class="setting-item">
+                <button id="reset-progress-btn" class="danger-btn">重置本题库进度</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
     <div id="toast" class="toast hidden">导入成功！</div>
 
     <script src="script.js"></script>
